@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#calc-body {
+    width: 400px;
+    height: 600px;
+    border: 1px solid black;
+}
+
+#display {
+    height: 100px;
+    border: 1px solid black;
+    background-color: bisque;
+}
+
+.row {
+    height: 100px;
+    display: flex;
+}
+
+.button {
+    flex: 1;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    font-size: 30px;
+}
+
+.button.digit{
+    background-color: gray;
+}
+
+#point,
+#clear,
+#backspace,
+#equal {
+    background-color: lightseagreen;
+}
+
+#multiply,
+#add,
+#subtract,
+#divide {
+    background-color: darkgoldenrod;
+}
+
+
+#clear,
+#equal {
+    flex: 2;
+    border: 1px solid black;
+}
+
