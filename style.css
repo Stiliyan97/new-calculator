@@ -41,6 +41,7 @@ body {
     align-items: center;
     font-weight: 800;
     font-size: 30px;
+    cursor: default;
 }
 
 .button:hover{

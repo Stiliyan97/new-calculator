@@ -33,57 +33,104 @@ function divide(a, b) {
 let firstNumber = "";
 let secondNumber = "";
 let operator = "";
+let displayInput = document.getElementById("display");
 
 //function that will do a specific operation based on the input
 
-function operate(firstNumber, secondNumber, operator) {
+function operate(firstNumberP, secondNumberP, operatorP) {
+    let firstNumberInt = parseInt(firstNumberP);
+    let secondNumberInt = parseInt(secondNumberP);
     let result = 0;
-    switch (operator) {
+    switch (operatorP) {
         case "+":
-            result = add(firstNumber, secondNumber);
+            result = add(firstNumberInt, secondNumberInt);
             break;
         case "*":
-            result = multiply(firstNumber, secondNumber);
+            result = multiply(firstNumberInt, secondNumberInt);
             break;
         case "-":
-            result = subtract(firstNumber, secondNumber);
+            result = subtract(firstNumberInt, secondNumberInt);
             break;
         default:
-            result = divide(firstNumber, secondNumber)
+            result = divide(firstNumberInt, secondNumberInt)
             break;
+    }
+    firstNumber = `${result}`;
+    secondNumber = "";
+    operator = "";
+    displayInput.value = result;
+}
+
+//this function adds the digits
+
+function addDigitToDisplay(currentBtn) {
+    if (operator !== "" && secondNumber === "") {
+        displayInput.value += " " + currentBtn.textContent;
+        secondNumber += currentBtn.textContent;
+    } else {
+        if (secondNumber !== "") {
+            displayInput.value += currentBtn.textContent;
+            secondNumber += currentBtn.textContent;
+        } else { 
+            displayInput.value += currentBtn.textContent;
+            firstNumber += currentBtn.textContent;
+        }
     }
 }
 
-let allDigitBtns = document.querySelectorAll(".button.digit");
+//this function adds the operators
 
-
-function addToTheInput(e) {
-    let currentBtn = e.target;
-    let displayInput = document.getElementById("display");
-    console.log(currentBtn.classList.contains("digit"));
-
-    if (currentBtn.classList.contains("operator")) {
+function addOperatorToDisplay(currentBtn) {
+    if (firstNumber !== "" && operator === "") {
         displayInput.value += " " + currentBtn.textContent;
+        operator = currentBtn.textContent;
+    } 
+
+    if (secondNumber !== "") {
+        operate();  
     }
+}
 
-    // displayInput.value += digitbtn.textContent;
-    //firstNumber += digitbtn.textContent;
-//console.log(firstNumber);
+//This function adds input to the display
 
+function addInputToDisplay(e) {
+    let currentBtn = e.target;
+    if (currentBtn.classList.contains("digit")) {
+        addDigitToDisplay(currentBtn);
+    } else if(currentBtn.classList.contains("operator")) {
+        addOperatorToDisplay(currentBtn);}
 }
 
 //This cycle adds click event to all digit buttons
 
+let allDigitBtns = document.querySelectorAll(".button.digit");
+
 for (let i = 0; i < allDigitBtns.length; i++) {
-    allDigitBtns[i].addEventListener("click", addToTheInput)
+    allDigitBtns[i].addEventListener("click", addInputToDisplay)
 }
 
-allOperatorBtns = document.querySelectorAll(".button.operator");
 
+
+//this cycle add click event to all operator buttons
+
+let allOperatorBtns = document.querySelectorAll(".button.operator");
 
 for (let i = 0; i < allOperatorBtns.length; i++) {
-    allOperatorBtns[i].addEventListener("click", addToTheInput);
+    allOperatorBtns[i].addEventListener("click", addInputToDisplay);
 }
+
+
+//this function checks if the calculator have all the needed variables before the running operate
+
+let equalbtn = document.getElementById("equal");
+
+function checkTheCalc() {
+    if (firstNumber !== "" && operator !== "" & secondNumber !== "") {
+        operate(firstNumber, secondNumber, operator);
+    }
+}
+
+equalbtn.addEventListener("click", checkTheCalc)
 
 
 
