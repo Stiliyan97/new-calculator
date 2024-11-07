@@ -71,33 +71,33 @@ function operate(firstNumberP, secondNumberP, operatorP) {
 
 //this function adds the digits
 
-function addDigitToDisplay(currentBtn) {
+function addDigitToDisplay(charToAdd) {
     if (operator !== "" && secondNumber === "") {
-        displayInput.value += " " + currentBtn.textContent;
-        secondNumber += currentBtn.textContent;
+        displayInput.value += " " + charToAdd;
+        secondNumber += charToAdd;
     } else {
         if (secondNumber !== "") {
-            displayInput.value += currentBtn.textContent;
-            secondNumber += currentBtn.textContent;
+            displayInput.value += charToAdd;
+            secondNumber += charToAdd;
         } else { 
-            displayInput.value += currentBtn.textContent;
-            firstNumber += currentBtn.textContent;
+            displayInput.value += charToAdd;
+            firstNumber += charToAdd;
         }
     }
 }
 
 //this function adds the operators
 
-function addOperatorToDisplay(currentBtn) {
+function addOperatorToDisplay(charToAdd) {
     if (firstNumber !== "" && operator === "") {
-        displayInput.value += " " + currentBtn.textContent;
-        operator = currentBtn.textContent;
+        displayInput.value += " " + charToAdd;
+        operator = charToAdd;
     } 
 
     if (secondNumber !== "") {
         checkTheCalc();
-        displayInput.value += " " + currentBtn.textContent;
-        operator = currentBtn.textContent;
+        displayInput.value += " " + charToAdd;
+        operator = charToAdd;
     }
 }
 
@@ -105,10 +105,12 @@ function addOperatorToDisplay(currentBtn) {
 
 function addInputToDisplay(e) {
     let currentBtn = e.target;
+    let charToAdd = currentBtn.textContent;
+    console.log(charToAdd);
     if (currentBtn.classList.contains("digit")) {
-        addDigitToDisplay(currentBtn);
+        addDigitToDisplay(charToAdd);
     } else if(currentBtn.classList.contains("operator")) {
-        addOperatorToDisplay(currentBtn);}
+        addOperatorToDisplay(charToAdd);}
 }
 
 //This cycle adds click event to all digit buttons
@@ -212,6 +214,40 @@ function addPointToNumber() {
         }
         secondNumber += ".";
         displayInput.value += ".";
+    }
+}
+
+//this code provides keyboard support to my function
+
+displayInput.addEventListener("keydown", keyboardInputToCalc);
+
+function keyboardInputToCalc(e){
+    const allowedKeys = ["0","1","2","3","4","5","6","7","8","9",".","+","-","/","*","=","Backspace","Enter"];
+
+    const digits = ["0","1","2","3","4","5","6","7","8","9"];
+    const operators = ["+","-","/","*"];
+    if (!allowedKeys.includes(e.key)) { 
+        e.preventDefault();
+        }
+
+    if (digits.includes(e.key)) {
+        e.preventDefault();
+        addDigitToDisplay(e.key);
+        console.log(firstNumber);
+        console.log(secondNumber);
+    } else if (operators.includes(e.key)){
+        e.preventDefault();
+        addOperatorToDisplay(e.key);
+    } else if (e.key === "."){
+        e.preventDefault();
+        addPointToNumber();
+    } else if (e.key === "Backspace"){
+        console.log("red");
+        e.preventDefault();
+        deleteEntry();
+    } else if (e.key === "=" || e.key === "Enter") {
+        e.preventDefault();
+        checkTheCalc();
     }
 }
 
