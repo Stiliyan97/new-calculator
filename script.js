@@ -39,8 +39,9 @@ console.log(displayInput.length);
 //function that will do a specific operation based on the input
 
 function operate(firstNumberP, secondNumberP, operatorP) {
-    let firstNumberInt = parseInt(firstNumberP);
-    let secondNumberInt = parseInt(secondNumberP);
+    let firstNumberInt = parseFloat(firstNumberP);
+    let secondNumberInt = parseFloat(secondNumberP);
+    console.log(secondNumberP);
     let result = 0;
     switch (operatorP) {
         case "+":
@@ -131,7 +132,7 @@ for (let i = 0; i < allOperatorBtns.length; i++) {
 
 //this function checks if the calculator have all the needed variables before the running operate
 
-let equalbtn = document.getElementById("equal");
+let equalBtn = document.getElementById("equal");
 
 function checkTheCalc() {
     if (firstNumber !== "" && operator !== "" & secondNumber !== "") {
@@ -139,7 +140,7 @@ function checkTheCalc() {
     }
 }
 
-equalbtn.addEventListener("click", checkTheCalc)
+equalBtn.addEventListener("click", checkTheCalc)
 
 
 // This part of the code is for clearing the calculator
@@ -190,6 +191,28 @@ function deleteEntry() {
         displayInput.value = displayInput.value.slice(0, -1);
     }
     
+}
+
+// Adds a point to the numbers in the calculator
+
+pointBtn = document.getElementById("point");
+
+pointBtn.addEventListener("click", addPointToNumber)
+
+function addPointToNumber() {
+    if(firstNumber !== "" && operator === "") {
+        if (firstNumber.includes(".")){
+            return;
+        }
+        firstNumber += ".";
+        displayInput.value += "."; 
+    } else if (secondNumber !== "") {
+        if(secondNumber.includes(".")){
+            return;
+        }
+        secondNumber += ".";
+        displayInput.value += ".";
+    }
 }
 
 
