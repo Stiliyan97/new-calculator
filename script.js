@@ -34,6 +34,7 @@ let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 let displayInput = document.getElementById("display");
+console.log(displayInput.length);
 
 //function that will do a specific operation based on the input
 
@@ -58,7 +59,13 @@ function operate(firstNumberP, secondNumberP, operatorP) {
     firstNumber = `${result}`;
     secondNumber = "";
     operator = "";
-    displayInput.value = result;
+    console.log(result >= 1000000000);
+    if (result >= 1000000000) {
+        displayInput.value = Number(result).toPrecision(5);
+    } else {
+        displayInput.value = result;
+    }
+    
 }
 
 //this function adds the digits
@@ -87,7 +94,9 @@ function addOperatorToDisplay(currentBtn) {
     } 
 
     if (secondNumber !== "") {
-        operate();  
+        checkTheCalc();
+        displayInput.value += " " + currentBtn.textContent;
+        operator = currentBtn.textContent;
     }
 }
 
@@ -131,6 +140,59 @@ function checkTheCalc() {
 }
 
 equalbtn.addEventListener("click", checkTheCalc)
+
+
+// This part of the code is for clearing the calculator
+
+clearBtn = document.getElementById("clear");
+
+clearBtn.addEventListener("click", clearTheCalc)
+
+function clearTheCalc() {
+
+    firstNumber = "";
+    secondNumber = "";
+    operator = "";
+    displayInput.value = "";
+    
+}
+
+// the code below is for removing single characters from the code.
+
+backspaceBtn = document.getElementById("backspace");
+
+backspaceBtn.addEventListener("click", deleteEntry)
+
+function deleteEntry() {
+
+    if(secondNumber !== "") {
+        deleteFromSecondNumber();
+    } else if (operator !== ""){
+        operator = "";
+        displayInput.value = displayInput.value.slice(0, -2);
+    } else if (firstNumber !== "") {
+        deleteFromFirstNumber();
+    }
+        
+
+    function deleteFromSecondNumber() {
+        secondNumber = secondNumber.slice(0, -1);
+        if(secondNumber.length === 0) {
+            displayInput.value = displayInput.value.slice(0, -2);
+            
+        } else {
+            displayInput.value = displayInput.value.slice(0, -1);
+        }
+    }
+
+    function deleteFromFirstNumber() {
+        firstNumber = firstNumber.slice(0, -1);
+        displayInput.value = displayInput.value.slice(0, -1);
+    }
+    
+}
+
+
 
 
 
